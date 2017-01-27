@@ -17,8 +17,6 @@
 ##
 
 
-source ~/.config/jmassot/alias
-
 #Keybinding
 # in the history based on the beginning of the line
 #Down
