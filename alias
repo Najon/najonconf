@@ -1,0 +1,16 @@
+#!/bin/sh
+
+alias_set() {
+  alias -- "$1=$2"
+}
+
+alias_set + 'pushd +0'
+alias_set - 'pushd -1'
+
+#emacs alias_set
+alias_set e 'emacs'
+alias_set z "zsh"
+
+alias_set l 'ls -F --color=auto'
+alias_set ls 'ls -F --color=auto'
+alias_set ll 'ls -lF --color=auto'

@@ -1,0 +1,50 @@
+## zsh prompt config vampirized from ctafconf
+## Copyright (C) 2008 GESTES Cedric
+## Copyright (C) 2016 MASSOT Julien <massot dot julien at gmail dot com>
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 3 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program; if not, write to the Free Software
+## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+##
+#### PROMPT
+autoload -Uz colors   && colors
+
+####################################
+# COLORS
+####################################
+bright="\033[m1;"
+dull="\033[m0;"
+for color in BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+  eval PR_$color='%{$fg_no_bold[${(L)color}]%}'
+  eval PR_BG_$color='%{$bg[${(L)color}]%}'
+  eval PR_LIGHT_$color='%{$fg_bold[${(L)color}]%}'
+  (( count = $count + 1 ))
+done
+PR_NO_COLOUR="%{$terminfo[sgr0]%}"
+PR_NO_COLOUR="%{$terminfo[sgr0]%}"
+
+#customise this two variable to change foreground/background
+#left empty for automatic default
+PR_BG_PROMPT=""
+PR_FG_PROMPT="${PR_NO_COLOUR}"
+
+BASE_PROMPT="${PR_BG_PROMPT}${PR_LIGHT_MAGENTA}%(!.%SROOT%s.${PR_FG_PROMPT}%n${PR_LIGHT_YELLOW})\
+@${PR_LIGHT_GREEN}%m${PR_LIGHT_MAGENTA} \
+[%(?.${PR_FG_PROMPT}$?.${PR_LIGHT_RED}% err %?)${PR_LIGHT_MAGENTA}] \
+[${PR_LIGHT_BLUE}%~${PR_LIGHT_MAGENTA}]${PR_NO_COLOUR}
+${PR_BG_PROMPT}${PR_FG_PROMPT}z${PR_LIGHT_GREEN}%(!.#.$)${PR_NO_COLOUR} "
+
+#PROMPT="\$psvar[1]${BASE_PROMPT}"
+PROMPT="${BASE_PROMPT}"
+RPROMPT="[${PR_BG_PROMPT}${PR_LIGHT_CYAN}%D ${PR_LIGHT_GREEN}%T${PR_NO_COLOUR}]"
+PS2=''
