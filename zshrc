@@ -24,6 +24,8 @@ bindkey '^[[A' history-beginning-search-backward
 #Up
 bindkey '^[[B' history-beginning-search-forward
 
+export HISTSIZE=10000
+export SAVEHIST=10000
 PATH="$PATH:$HOME/.config/jmassot/bin"
 source ~/.config/jmassot/prompt
 source ~/.config/jmassot/alias
