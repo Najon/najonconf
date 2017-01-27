@@ -1,0 +1,14 @@
+I was using ctafconf[1] for years, but finally i decide to fork it.
+
+===========================================================
+INSTALL
+===========================================================
+
+> mkdir .config
+> cd .config
+> git clone https://github.com/Najon/najonconf.git
+
+> echo "source ~/.config/najonconf/zshrc" >> ~/.zshrc
+
+
+[1] https://github.com/cgestes/ctafconf
