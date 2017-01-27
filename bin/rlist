@@ -1,5 +1,20 @@
 #!/bin/sh
 
+EXTRA_ROBOT_TYPE=
+EXTRA_ROBOT_REAL=
+
+parse_extra()
+{
+  EXTRA_ROBOT_TYPE=`echo $1 | cut -f1 -d' ' | cut -f2 -d'=' | cut -f1 -d'"'`
+  if [ "x$EXTRA_ROBOT_TYPE" == "x" ]; then
+    EXTRA_ROBOT_TYPE="unknown type"
+  elif [ $EXTRA_ROBOT_TYPE == "Nao" ]; then
+    EXTRA_ROBOT_TYPE="()°°)"
+  elif [ $EXTRA_ROBOT_TYPE == "Pepper" ]; then
+    EXTRA_ROBOT_TYPE="(o.o)"
+  fi
+}
+
 usage() {
   echo "Usage: rlist [-i | -n]" >&2
   echo "" >&2
@@ -12,9 +27,11 @@ usage() {
   exit 1
 }
 
+
+
 OPT_ORDER="-i"
 OPT_NAOQI='false'
-OPT_SERVICE='_nao._tcp'
+OPT_SERVICE='_naoqi._tcp'
 
 while [ $# -gt 0 ] ; do
   case $1 in
@@ -47,21 +64,27 @@ if ${OPT_NAOQI} ; then
   naoqi_list=$(avahi-browse -p -r -t _naoqi._tcp 2> /dev/null | grep "^=" | cut -f8 -d';')
 fi
 
-avahi-browse -p -r -t ${OPT_SERVICE} 2> /dev/null | grep "^=" | while read I;
+avahi-browse -p -r -t ${OPT_SERVICE} 2> /dev/null | grep "^=" | grep -v 'Virtual' | while read I;
 do
   [ "$(echo -n $I | cut -f3 -d ';')" = 'IPv4' ] || continue
   HOST=`echo -n $I | cut -f 4 -d ';'`
   IP=`echo -n$I | cut -f 8 -d ';'`
+  EXTRA=`echo -n$I | cut -f 10 -d ';'`
+
+  parse_extra $EXTRA
+
   NAOQI_STATUS=" "
   if ${OPT_NAOQI} ; then
     NAOQI_STATUS="naoqi: $(echo ${naoqi_list} | grep ${IP} &>/dev/null && echo 'run' || echo '-')"
   fi
+
   case $OPT_ORDER in
     "-n")
-      printf "%-25s => %-15s  %s\n" $HOST $IP $NAOQI_STATUS
+      printf "%-25s => %-15s \n" $HOST $IP $NAOQI_STATUS
       ;;
     *)
-      printf "%-15s => %-25s  %s\n" $IP $HOST $NAOQI_STATUS
+      #      printf "%-15s => %-25s (%s)\n" $IP $HOST $EXTRA_ROBOT_TYPE
+             printf "%-15s => %-15s %s\n" $IP $HOST $EXTRA_ROBOT_TYPE
       ;;
   esac
 done | sort
