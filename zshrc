@@ -26,6 +26,8 @@ bindkey '^[[B' history-beginning-search-forward
 
 export HISTSIZE=10000
 export SAVEHIST=10000
+export HISTFILE=~/.zshhistory
+
 PATH="$PATH:$HOME/.config/jmassot/bin"
 source ~/.config/jmassot/prompt
 source ~/.config/jmassot/alias
