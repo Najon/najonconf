@@ -28,6 +28,6 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 export HISTFILE=~/.zshhistory
 
-PATH="$PATH:$HOME/.config/jmassot/bin"
-source ~/.config/jmassot/prompt
-source ~/.config/jmassot/alias
+PATH="$PATH:$HOME/.config/najonconf/bin"
+source ~/.config/najonconf/prompt
+source ~/.config/najonconf/alias
