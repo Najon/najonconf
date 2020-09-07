@@ -12,3 +12,14 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t))
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(package-initialize)
+
+(setq markdown-command "multimarkdown")
+(require 'xcscope)
+(setq-default c-default-style "linux")
+
+(global-set-key [M-right]        'previous-buffer)
+(global-set-key [M-left]        'next-buffer)
